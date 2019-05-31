@@ -1,42 +1,33 @@
-PROJECT=s9-demo
-REGION=us-central1
 TOPIC=button-actions
-FUNC=button-action-handler
-SCHEMA=button
-TABLE=actions
-
-all: url
 
 topic:
 	gcloud pubsub topics create ${TOPIC}
 
-deploy:
-	gcloud alpha functions deploy $(FUNC) \
-		--entry-point GitHubEventHandler \
-		--set-env-vars SEC=$(HOOK_SECRET),TOP=$(PUBSUB_TOPIC),PRJ=$(GCP_PROJECT) \
-		--memory 128MB \
-		--region $(REGION) \
-		--runtime go112 \
-		--trigger-http
+topicless:
+	gcloud pubsub topics delete ${TOPIC}
 
-policy:
-	gcloud alpha functions add-iam-policy-binding $(FUNC) \
-		--region $(REGION) \
-		--member allUsers \
-		--role roles/cloudfunctions.invoker
+mod:
+	go mod tidy
+	go mod vendor
 
-url:
-	gcloud functions describe github-event-handler \
-		--region $(REGION) \
-		--format='value(httpsTrigger.url)'
+image: mod
+	gcloud builds submit \
+		--project ${GCP_PROJECT} \
+		--tag gcr.io/${GCP_PROJECT}/buttons:0.1.1
 
-table:
-	bq mk $(SCHEMA)
-	bq mk --schema id:string,repo:string,type:string,actor:string,event_time:timestamp,countable:boolean -t $(SCHEMA).$(TABLE)
+service:
+	gcloud beta run deploy buttons \
+		--region=us-central1 \
+		--concurrency=80 \
+		--memory=256Mi \
+		--allow-unauthenticated \
+		--image=gcr.io/${GCP_PROJECT}/buttons:0.1.1 \
+		--update-env-vars="secret=${HOOK_SECRET},project=${GCP_PROJECT},topic=${TOPIC}"
 
 test:
 	go test ./... -v
 
-deps:
-	go mod tidy
-
+post:
+	curl -H "content-type: application/json" -H "token: ${HOOK_SECRET}" \
+		-d '{ "version": "v0.1.0", "type": "button", "color": "white", "action": "single-click" }' \
+		-X POST https://buttons-4afw4gizxa-uc.a.run.app

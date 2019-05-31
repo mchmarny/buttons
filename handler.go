@@ -1,43 +1,36 @@
-package buttons
+package main
 
 import (
 	"encoding/json"
-	"io"
+	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
-// RequestHandler handles the HTTP request
-func RequestHandler(w http.ResponseWriter, r *http.Request) {
+// requestHandler handles the HTTP request
+func requestHandler(w http.ResponseWriter, r *http.Request) {
+
+	token := strings.TrimSpace(r.Header.Get("token"))
+	if secret != token {
+		logger.Fatal("Invalid token: " + token)
+	}
+
+	data, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		logger.Fatal("Error getting data: " + err.Error())
+	}
+
+	if len(data) > 0 {
+		logger.Println(string(data))
+		err = que.push(r.Context(), data)
+		if err != nil {
+			logger.Fatal("Error storing data: " + err.Error())
+		}
+	}
 
 	w.Header().Set("Content-type", "application/json")
-
-	once.Do(func() {
-		if err := configInitializer(r.Context()); err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			logger.Printf("Error while initializing configuration: %v", err)
-			io.WriteString(w, errorJSON)
-			return
-		}
-	})
-
-	data, err := parseRequest(r)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		logger.Printf("Error while processing data: %v", err)
-		io.WriteString(w, errorJSON)
-		return
-	}
-
-	err = que.push(r.Context(), data)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		logger.Printf("Error while storing event: %v", err)
-		io.WriteString(w, errorJSON)
-		return
-	}
-
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(data)
+	json.NewEncoder(w).Encode("OK")
 
 	return
 }
