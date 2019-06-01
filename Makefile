@@ -1,10 +1,9 @@
-TOPIC=button-actions
 
 topic:
-	gcloud pubsub topics create ${TOPIC}
+	gcloud pubsub topics create clicks
 
 topicless:
-	gcloud pubsub topics delete ${TOPIC}
+	gcloud pubsub topics delete clicks
 
 mod:
 	go mod tidy
@@ -12,8 +11,8 @@ mod:
 
 image: mod
 	gcloud builds submit \
-		--project ${GCP_PROJECT} \
-		--tag gcr.io/${GCP_PROJECT}/buttons:0.1.1
+		--project knative-samples \
+		--tag gcr.io/knative-samples/buttons:0.1.2
 
 service:
 	gcloud beta run deploy buttons \
@@ -21,13 +20,22 @@ service:
 		--concurrency=80 \
 		--memory=256Mi \
 		--allow-unauthenticated \
-		--image=gcr.io/${GCP_PROJECT}/buttons:0.1.1 \
-		--update-env-vars="secret=${HOOK_SECRET},project=${GCP_PROJECT},topic=${TOPIC}"
+		--image=gcr.io/knative-samples/buttons:0.1.2 \
+		--update-env-vars="secret=${HOOK_SECRET}"
+
+catalog:
+	gcloud beta data-catalog entries update \
+		--lookup-entry='pubsub.topic.`s9-demo`.clicks' \
+		--schema-from-file=schema.yaml
+
+catalog-check:
+	gcloud beta data-catalog entries lookup \
+		'pubsub.topic.`s9-demo`.clicks'
 
 test:
 	go test ./... -v
 
 post:
 	curl -H "content-type: application/json" -H "token: ${HOOK_SECRET}" \
-		-d '{ "version": "v0.1.0", "type": "button", "color": "white", "action": "single-click" }' \
+		-d '{ "version": "v0.1.0", "type": "button", "color": "white", "click": 2 }' \
 		-X POST https://buttons-4afw4gizxa-uc.a.run.app

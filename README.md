@@ -1,122 +1,82 @@
-# github-activity-counter [![Build Status](https://travis-ci.org/mchmarny/github-activity-counter.svg?branch=master)](https://travis-ci.org/mchmarny/github-activity-counter)
+# buttons
 
-The `github-activity-counter` is a simple GitHub activity counter to get a real-time visibility into the repo collaboration events. It captures series of GitHub WebHook events and extracts normalized activity data for configurable persistence.
+Co-worker recently told me about this super cool/simple button from [flic.io](https://flic.io/) that allows you to wire-up all kinds of custom actions to a single, double click or even press-and-hold actions.
 
-## Supported Events
+In case you haven't heard, Google has recently launched [Cloud Run](https://cloud.google.com/run/) which seemed like a perfect platform to take these new buttons for a spin... so I ordered a [3-pack](https://flic.io/shop/flic-4pack).
 
-* [issue_comment](https://developer.github.com/v3/activity/events/types/#issuecommentevent) - Issue comment is created, edited, or deleted
-* [commit_comment](https://developer.github.com/v3/activity/events/types/#commitcommentevent) - Commit comment is created
-* [issues](https://developer.github.com/v3/activity/events/types/#issuesevent) - Issue is opened, edited, deleted, transferred, closed, reopened, assigned, unassigned, labeled, unlabeled, milestoned, or demilestoned
-* [pull_request](https://developer.github.com/v3/activity/events/types/#pullrequestevent) - Pull request is assigned, unassigned, labeled, unlabeled, opened, edited, closed, reopened, or synchronized. (Note, also triggered when a pull request review is requested/removed)
-* [pull_request_review_comment](https://developer.github.com/v3/activity/events/types/#pullrequestreviewcommentevent) - Comment on a pull request's unified diff is created, edited, or deleted
-* [pull_request_review](https://developer.github.com/v3/activity/events/types/#pullrequestreviewcommentevent) - Comment on a pull request's unified diff is created, edited, or deleted
-* [push](https://developer.github.com/v3/activity/events/types/#pushevent) - Push to a repository branch (also repository tag pushes)
+I can already think about some really interesting demos (true/false quiz?). To start with though, I wanted to create a simple service that would allow me to push the data sent from the button to Cloud PubSub which connects me to all other interesting actuation options on GCP.
 
-## Why
+In this repo I will show you how to:
 
-* Getting true repo activity is complex (e.g. PR comments by author vs committed which may be tool like prow)
-* GitHub build-in tools/APIs don't expose data at the right granularity (e.g. user associated org grouped by month activity)
-* Most readily available SDKs/Libs address only data retrieval, and have a lot of dependencies
+* Deploy generic Cloud Run service that will persist sent data to Cloud PubSub
+* Configure Flic buttons to sent data to Cloud Run service
 
-## Extracted Data
 
-| Data Element | Type   | Description                                                                                                                               |
-| ------------ | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| ID           | string | WebHook delivery ID, immutable even when the same event is submitted multiple times                                                       |
-| Type         | string | GitHUb event type, e.g. commit_comment                                                                                                    |
-| EventAt      | time   | True event time, not the WebHook processing time (with exception of push which doesn't have push time and could include multiple commits) |
-| Repo         | string | Fully-qualified name of the repository, e.g. mchmarny/github-activity-counter                                                             |
-| Actor        | string | GitHub username of the actor who initialized that event, e.g. PR author vs the PR merger who could be a automation tool like prow         |
-| Raw          | json   | Full content fo the GitHub WebHook payload (used for debugging and in reprocess operations)                                               |
+## Deploy Cloud Run Service
 
-## Setup
-
-To setup `github-activity-counter` you will have to:
-
-* Deploy the code to runtime (e.g. Google Cloud Functions)
-* Setup GitHub WebHook
-
-### Deploy the code
-
-> Assumes you already configured your GCP account, project and gcloud
-
-First you will need to create a pubsub topic where `github-activity-counter` will publish the `countable` events
+First, create a pub/sub topic called `clicks`
 
 ```shell
-make topic
+gcloud pubsub topics create clicks
 ```
 
-Create BigQuery table
+That should result with
 
 ```shell
-make table
+Created topic [projects/YOUR_PROJECT_ID/topics/clicks].
 ```
 
-Create Dataflow job to load data from PubSub topic to BigQuery table
+Next deploy the generic Cloud Run service called `buttons`. The code for that service is in this repo for you to review. There is already public image available (see below) but if you want to, you can build your own copy with this command:
 
 ```shell
-make job
+gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/buttons:0.1.1
 ```
 
-Define secret that will be shared between GitHub and your Function. Best to use an auto-generated, opaque, string. You can generate 32 character long string using `openssl` like this:
+> Quickstart on building images using Cloud Build is available [here](https://cloud.google.com/run/docs/quickstarts/build-and-deploy)
+
+If you don't want to build images yourself however you can use the one I already published (`gcr.io/knative-samples/buttons:0.1.1`).
+
+Before we deploy the Cloud Run service we have to create a `secret` which we will use to ensure that only your buttons data will be accepted. To do that, run the following command to after your replace the `your-long-and-super-secret-string` string with something more secure ;)
 
 ```shell
-openssl rand -base64 32
+export SECRET="your-long-and-super-secret-string"
 ```
 
-Set that secrete as an `HOOK_SECRET` system variable or define it in the `Makefile`
+> For more secure way to defining secrets on GCP you can use [berglas](https://github.com/GoogleCloudPlatform/berglas)
 
-Deploy the function to GCF
+Now that we have the `SECRET` defined, we can deploy the Cloud Run service. A couple of flags worth highlighting in the bellow command:
+
+* `concurrency` - the button service is thread safe and doesn't store any internal state so we can turn the concurrency to maximum. More on concurrency [here](https://cloud.google.com/run/docs/about-concurrency)
+* `allow-unauthenticated` - By default Cloud Run creates private services which can't be access by anonymous users. Since our buttons don't support more complex authentication, we will expose the Cloud Run service to the public and validate each request using `token` string in request header. More on allowing public access [here](https://cloud.google.com/run/docs/authenticating/public)
+
 
 ```shell
-make deploy
+gcloud beta run deploy buttons \
+    --region=us-central1 \
+    --concurrency=80 \
+    --allow-unauthenticated \
+    --image=gcr.io/knative-samples/buttons:0.1.2 \
+    --update-env-vars="SECRET=${SECRET}"
 ```
 
-The response from the deployment will be...
+The response from the above command should look something like this
 
 ```shell
-Deploying function (may take a while - up to 2 minutes)
+Deploying container to Cloud Run service [buttons] in project [YOUR_PROJECT_ID] region [us-central1]
+✓ Deploying... Done.
+  ✓ Creating Revision...
+  ✓ Routing traffic...
+  ✓ Setting IAM Policy...
+Done.
+Service [buttons] revision [buttons-00001] has been deployed and is serving traffic at https://buttons-*******-uc.a.run.app
 ```
 
-...followed by metadata about your function. The one we need to capture will be the URL of your function. Should look like this:
+You can test the depliyed service using `curl`. Just make sure you replace the `*` part of the URL with the actual `URL` returned by the above command.
 
 ```shell
-httpsTrigger:
-  url: https://us-central1-s9-demo.cloudfunctions.net/github-event-handler
+curl -H "content-type: application/json" -H "token: ${SECRET}" \
+    -d '{ "version": "v0.1.0", "type": "button", "color": "white", "click": 1 }' \
+    -X POST https://buttons-*******-uc.a.run.app
 ```
 
-If you ever forget that, you can look it up using
-
-```shell
-make url
-```
-
-By default, GCF functions are deployed as private. For GitHub access it you will have to expose it to world
-
-```shell
-make policy
-```
-
-> Your GitHub WebHook will include secret so only the GitHub activity will be counted
-
-
-### Setup GitHub WebHook
-
-GitHub has good [instructions](https://developer.github.com/webhooks/creating/) on how to setup your WebHook. In short it amounts to:
-
-* Signing to GitHub, and navigating to repo or org settings
-* Clicking `Webhooks` on the left panel
-* Click on the `Add WebHook` button
-* Pasting your deployed function URL (from the deployment step)
-* Click `Edit` under Secret and paste your secret (one generated by openssl)
-* Selecting `application/json` as the content type
-* Select `Send me everything` or select individual events you want to count (see supported events)
-* Leave the `Active` checkbox checked
-* Click on `Add Webhook` to save your settings
-
-## Test
-
-To test the setup you can create an issue in the repo where you configured the WebHook. In the WebHook log there should be an indication the WebHook worked (response 200) or didn't.
-
-Similarly on the GCF side, you should be able to see the logs generated by `github-activity-counter` using the function logs link.
-
+## Configuring Flic buttons
