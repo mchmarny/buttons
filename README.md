@@ -2,11 +2,11 @@
 
 <img align="right" src="image/flic.png" alt="Flic button">
 
-A co-worker recently told me about [flic.io](https://flic.io/) buttons that can easily wire up single or double click, or even press-and-hold type of action to all kinds of actions.
+A co-worker recently told me about [flic.io](https://flic.io/) buttons. These button caught my attention because they can include triggers for single, double, or hold click and can be easily wired up to all kinds of actions.
 
-After quick review I could quickly think of a few really interesting applications. To start with though, I wanted to create a simple service that would allow me to push the data sent from the button to Cloud PubSub which then connects me to the entire portfolio of actuation options through GCP APIs and services.
+I instantly thought of of a few really interesting applications. Bit, to start with, I wanted to create a simple service that would allow me to push the custom data defined on each button to Cloud PubSub over HTTP which then connects me to the entire portfolio of actuation options through GCP APIs and services.
 
-The recently launched [Cloud Run](https://cloud.google.com/run/) seamed like a perfect platform to develop such a service on so I went ahead and ordered [3-pack](https://flic.io/shop/flic-4pack).
+The recently launched [Cloud Run](https://cloud.google.com/run/) seemed like a perfect platform on which to implement such a service, so I went ahead and ordered [4-pack](https://flic.io/shop/flic-4pack).
 
 In this demo I will show you how to:
 
