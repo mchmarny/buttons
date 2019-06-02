@@ -2,7 +2,7 @@
 
 Co-worker recently told me about this super cool/simple button from [flic.io](https://flic.io/) that allows you to wire-up all kinds of custom actions to a single, double click or even press-and-hold actions.
 
-![Flic button](image/flic.png "Flic button")
+<img align="right" src="image/flic.png" alt="Flic button">
 
 
 In case you haven't heard, Google has recently launched [Cloud Run](https://cloud.google.com/run/) which seemed like a perfect platform to take these new buttons for a spin... so I ordered a [3-pack](https://flic.io/shop/flic-4pack).
