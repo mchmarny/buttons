@@ -1,8 +1,8 @@
 # Using Flick buttons with Cloud Run on GCP
 
-Co-worker recently told me about this simple IoT button from [flic.io](https://flic.io/) that allows you to wire-up all kinds of custom actions to a single, or double click, or even press-and-hold type of action.
-
 <img align="right" src="image/flic.png" alt="Flic button">
+
+Co-worker recently told me about this simple IoT button from [flic.io](https://flic.io/) that allows you to wire-up all kinds of custom actions to a single, or double click, or even press-and-hold type of action.
 
 Having done this short demo I can already think about few really interesting applications, but, to start with though, I wanted to create a simple service that would allow me to push the data sent from the button to Cloud PubSub which then connects me to the entire potfolio of actuation options on through GCP servcies.
 
