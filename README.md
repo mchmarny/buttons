@@ -45,9 +45,9 @@ Next deploy the generic Cloud Run service called `buttons`. The code for that se
 gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/buttons:0.1.1
 ```
 
-> For more information on how to build images using Cloud Build see [here](https://cloud.google.com/run/docs/quickstarts/build-and-deploy). If however you want to skip building your image, you can use the already pre-build public image (`gcr.io/knative-samples/buttons:0.1.1`).
+> For more information on how to build images using Cloud Build see [here](https://cloud.google.com/run/docs/quickstarts/build-and-deploy). You can skip the build step and use the already pre-built public image located at `gcr.io/knative-samples/buttons:0.1.1`
 
-Before we deploy the Cloud Run service we have to create a `secret` which we will use to ensure that only data from your buttons will be accepted. To do that, replace the `your-long-and-super-secret-string` string below with something more secure and define an environment variable that will hold your secret using this command:
+Before we deploy the Cloud Run service we have to create a `secret` which will be used to ensure that only data from your button will be accepted. To do that, replace the `your-long-and-super-secret-string` string below with something more secure and define it as an environment variable using this command:
 
 ```shell
 export SECRET="your-long-and-super-secret-string"
@@ -55,7 +55,7 @@ export SECRET="your-long-and-super-secret-string"
 
 > For more secure way to defining secrets on GCP you can use [berglas](https://github.com/GoogleCloudPlatform/berglas)
 
-Now that we have the `SECRET` defined, we can deploy the Cloud Run service. A couple of flags worth highlighting in the bellow command:
+Now that we have the `SECRET` defined, you can deploy the Cloud Run service. A couple of flags worth highlighting in the bellow command:
 
 * `concurrency` - the button service is thread safe and doesn't store any internal state so we can turn the concurrency to maximum. More on concurrency [here](https://cloud.google.com/run/docs/about-concurrency)
 * `allow-unauthenticated` - By default Cloud Run creates private services which can't be accessed by anonymous users. Since our buttons don't support more complex authentication scheme, we will expose the Cloud Run service to the public and validate each request using `token` string in request header. More on allowing public access [here](https://cloud.google.com/run/docs/authenticating/public)
