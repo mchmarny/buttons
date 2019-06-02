@@ -113,23 +113,24 @@ Few fields to configure here:
 * **URL** - The full URL of the Cloud Run Service
 * **Method** - `POST`
 * **Content Type** - `application/json`
+* **Body** - JSON payload to send to the service (e.g. `{ "type": "button", "color": "white", "click": 1 }`)
 * **HTTP Header** - Kye: `token`, Value: the value of the previously defined `SECRET`. Make sure you click the `Insert` button to "save" the header parameter before clicking `Done` to save the entire action.
 
 Now your Flic button is configured for use with Cloud Run
 
 ## Demo
 
-Assuming all the above deployment steps were completed successfully, you should be able to click the button and see the following:
+Assuming all the above deployment steps were completed successfully, you should be able to click the button and see the following in GCP:
 
-1. Entries in the Cloud Run service log
+1. **Entries in the Cloud Run service log**
 
 <img src="image/cr-log.png" alt="Cloud Run Log">
 
-2. Entries in the Cloud Run metrics chart
+2. **Entries in the Cloud Run metrics chart**
 
 <img src="image/cr-metric.png" alt="Cloud Run Metric">
 
-3. Stackdriver PubSub topic (`clikc`) metric chart
+3. **Stackdriver PubSub topic (`clikc`) metric chart**
 
 <img src="image/sd-metric.png" alt="Stackdriver Metric">
 
