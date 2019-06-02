@@ -16,11 +16,10 @@ In this demo I will show you how to:
 
 ## Prerequisites
 
-* gcloud command-line tool ([how-to](https://cloud.google.com/sdk/gcloud/))
-* Enabled GCP API
+* Configured gcloud CLI ([how-to](https://cloud.google.com/sdk/gcloud/))
+* Enabled GCP APIs
   * `gcloud services enable pubsub.googleapis.com`
   * `gcloud services enable run.googleapis.com`
-
 
 ## Deployment
 
