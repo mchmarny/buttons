@@ -1,13 +1,12 @@
 # Using Flick buttons with Cloud Run on GCP
 
-Co-worker recently told me about this super cool/simple button from [flic.io](https://flic.io/) that allows you to wire-up all kinds of custom actions to a single, double click or even press-and-hold actions.
+Co-worker recently told me about this simple IoT button from [flic.io](https://flic.io/) that allows you to wire-up all kinds of custom actions to a single, or double click, or even press-and-hold type of action.
 
 <img align="right" src="image/flic.png" alt="Flic button">
 
+Having done this short demo I can already think about few really interesting applications, but, to start with though, I wanted to create a simple service that would allow me to push the data sent from the button to Cloud PubSub which then connects me to the entire potfolio of actuation options on through GCP servcies.
 
-In case you haven't heard, Google has recently launched [Cloud Run](https://cloud.google.com/run/) which seemed like a perfect platform to take these new buttons for a spin... so I ordered a [3-pack](https://flic.io/shop/flic-4pack).
-
-I can already think about some really interesting demos (true/false quiz?). To start with though, I wanted to create a simple service that would allow me to push the data sent from the button to Cloud PubSub which connects me to all other interesting actuation options on GCP.
+The recently launched [Cloud Run](https://cloud.google.com/run/) seamed like a perfect platform to take the newelly ordered [3-pack](https://flic.io/shop/flic-4pack) for a spin.
 
 In this repo I will show you how to:
 
