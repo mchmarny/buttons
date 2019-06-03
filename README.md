@@ -53,7 +53,7 @@ Before we deploy the Cloud Run service we have to create a `secret` which will b
 export SECRET="your-long-and-super-secret-string"
 ```
 
-> For more secure way to defining secrets on GCP you can use [berglas](https://github.com/GoogleCloudPlatform/berglas)
+> For more secure way to defining secrets in Cloud Run environment variables you can use [berglas](https://github.com/GoogleCloudPlatform/berglas)
 
 Now that we have the `SECRET` defined, you can deploy the Cloud Run service. A couple of flags worth highlighting in the bellow command:
 
