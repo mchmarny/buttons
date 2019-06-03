@@ -10,27 +10,37 @@ import (
 // requestHandler handles the HTTP request
 func requestHandler(w http.ResponseWriter, r *http.Request) {
 
+	w.Header().Set("Content-type", "application/json")
+
 	token := strings.TrimSpace(r.Header.Get("token"))
 	if secret != token {
-		logger.Fatal("Invalid token: " + token)
+		logger.Printf("Invalid token: " + token)
+		writeResp(w, http.StatusForbidden, "Invalid Token")
+		return
 	}
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		logger.Fatal("Error getting data: " + err.Error())
+		logger.Printf("Error getting data: " + err.Error())
+		writeResp(w, http.StatusBadRequest, "Invalid Content")
+		return
 	}
 
 	if len(data) > 0 {
 		logger.Println(string(data))
 		err = que.push(r.Context(), data)
 		if err != nil {
-			logger.Fatal("Error storing data: " + err.Error())
+			logger.Printf("Error storing data: " + err.Error())
+			writeResp(w, http.StatusBadRequest, "Internal Error")
+			return
 		}
 	}
 
-	w.Header().Set("Content-type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode("OK")
-
+	writeResp(w, http.StatusOK, "OK")
 	return
+}
+
+func writeResp(w http.ResponseWriter, status int, msg string) {
+	w.WriteHeader(status)
+	json.NewEncoder(w).Encode(msg)
 }

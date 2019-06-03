@@ -49,10 +49,10 @@ Created topic [projects/YOUR_PROJECT_ID/topics/clicks].
 Next deploy the generic Cloud Run service called `buttons`. The code for that service is in this repository for you to review. There is already a public image available (see below), but if you want to, you can build your own copy with this command:
 
 ```shell
-gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/buttons:0.1.1
+gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/buttons:0.1.2
 ```
 
-> For more information on how to build images using Cloud Build see [here](https://cloud.google.com/run/docs/quickstarts/build-and-deploy). You can skip the build step and use the already pre-built public image located at `gcr.io/knative-samples/buttons:0.1.1`
+> For more information on how to build images using Cloud Build see [here](https://cloud.google.com/run/docs/quickstarts/build-and-deploy). You can skip the build step and use the already pre-built public image located at `gcr.io/knative-samples/buttons:0.1.2`
 
 Before we deploy the Cloud Run service we have to create a `secret` which will be used to ensure that only data from your button will be accepted. To do that, replace the `your-long-and-super-secret-string` string below with something more secure and define it as an environment variable using this command:
 

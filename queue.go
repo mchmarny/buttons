@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"cloud.google.com/go/pubsub"
 )
@@ -37,9 +38,10 @@ func newQueue(ctx context.Context, projectID, topicName string) (q *queue, err e
 	t := c.Topic(topicName)
 	_, err = t.Exists(ctx)
 	if err != nil {
+		logger.Printf("Topic %s not found, creating...", topicName)
 		t, err = c.CreateTopic(ctx, topicName)
 		if err != nil {
-			logger.Fatalf("Unable to create topic: %s - %v", topicName, err)
+			return nil, fmt.Errorf("Unable to create topic: %s - %v", topicName, err)
 		}
 	}
 
