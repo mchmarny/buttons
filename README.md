@@ -13,8 +13,6 @@ In this demo I will illustrate how to:
 * Deploy Cloud Run service that will persist sent data to Cloud PubSub
 * and, how to configure Flic buttons to send data to Cloud Run service
 
-[![Run on Google Cloud](https://storage.googleapis.com/cloudrun/button.svg)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/ahmetb-public/button&cloudshell_git_repo=https://github.com/mchmarny/buttons.git)
-
 ## Prerequisites
 
 * Configured gcloud CLI (Cloud SDK) for your operating system ([how-to](https://cloud.google.com/sdk/gcloud/)) with default application credentials:
