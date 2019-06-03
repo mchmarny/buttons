@@ -101,7 +101,7 @@ curl -H "content-type: application/json" -H "token: ${SECRET}" \
 You can always find the URL of your `buttons` service by executing the following command
 
 ```shell
-gcloud beta run services describe buttons --project YOUR_PROJECT_ID --region us-central1 --format 'value(status.domain)'
+gcloud beta run services describe buttons --region us-central1 --format 'value(status.domain)'
 ```
 
 ## Configuring Flic Button
