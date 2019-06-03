@@ -82,9 +82,13 @@ Done.
 Service [buttons] revision [buttons-00001] has been deployed and is serving traffic at https://buttons-*******-uc.a.run.app
 ```
 
-You should be able to see that service in Cloud Run UI now
+You should be able to see that service in Cloud Run service list
 
-<img src="image/cr-ui.png" alt="Cloud Run UI">
+```shell
+$: gcloud beta run services list
+   SERVICE   REGION       LATEST REVISION  SERVING REVISION  LAST DEPLOYED BY     LAST DEPLOYED AT
+✔  buttons   us-central1  buttons-00001    buttons-00001     mchmarny@*****.com   2019-06-01T00:10:06.059Z
+```
 
 You can also test the deployed service using `curl`. Just make sure you replace the `***` part of the URL with the actual `URL` returned by the above command.
 
