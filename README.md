@@ -122,23 +122,23 @@ Few parameters to configure here:
 
 | Parameter        | Description                                                                                                                               |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **URL**          | The full URL of the Cloud Run Service                                                                                                     |
+| **URL**          | Enter the full URL of the Cloud Run Service                                                                                               |
 | **Method**       | Select `POST`                                                                                                                             |
-| **Content Type** | `application/json`                                                                                                                        |
-| **Body**         | JSON payload to send to the service (e.g. `{ "type": "button", "color": "white", "click": 1 }`)                                           |
+| **Content Type** | Enter `application/json`                                                                                                                  |
+| **Body**         | Enter your JSON message to send to the service (e.g. `{ "type": "button", "color": "white", "click": 1 }`)                                |
 | **HTTP Header**  | Kye: `token`, Value: the value of the previously defined `SECRET`. Make sure you click the `Insert` button to "save" the header parameter |
 
 When done entering the above parameters, click `Done` in upper right corner to save the entire action. Now your Flic button is configured for use with Cloud Run.
 
 ## Demo
 
-Assuming all the above deployment steps were completed successfully, you should be able to click the button and see the following in GCP:
+Assuming all the above deployment steps were completed successfully, you should be able to click the button and see the following in GCP service:
 
-1. **Entries in the Cloud Run service log**
+1. **Cloud Run UI in service log**
 
 <img src="image/cr-log.png" alt="Cloud Run Log">
 
-2. **Entries in the Cloud Run metrics chart**
+1. **Cloud Run UI metrics charts**
 
 <img src="image/cr-metric.png" alt="Cloud Run Metric">
 
@@ -148,7 +148,9 @@ Assuming all the above deployment steps were completed successfully, you should 
 
 ## Summary
 
-Hopefully this demo gave you an idea on how to connect Cloud Run services to IOT devices. With the basic implementation in place we can start working on more creative solutions.
+Hopefully this demo gave you an idea on how to connect your Flic buttons and many other IoT devices to Cloud Run service. With the basic implementation in place we can start working on more creative solutions next.
+
+
 
 
 
