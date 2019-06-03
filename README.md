@@ -4,15 +4,14 @@
 
 A co-worker recently told me about [flic.io](https://flic.io/) buttons. These button caught my attention because they can include triggers for single, double, or hold click and can be easily wired up to all kinds of actions.
 
-I instantly thought of of a few really interesting applications. To start with though, I wanted to create a simple service that would allow me to push the custom data defined on each button to Cloud PubSub over HTTP which then connects me to the entire portfolio of actuation options through GCP APIs and services.
+I instantly thought of of a few really interesting applications. To start with though, I wanted to create a simple service that would allow me to push the custom data defined on each button over HTTP to Cloud PubSub. That in turn would then connect me to the many more actuation options through GCP APIs and services that connect to Cloud PugSub.
 
-The recently launched [Cloud Run](https://cloud.google.com/run/) seemed like a perfect platform on which to implement such a service, so I went ahead and ordered [4-pack](https://flic.io/shop/flic-4pack).
+I went ahead and ordered [4-pack](https://flic.io/shop/flic-4pack) of Flic buttons and chose [Cloud Run](https://cloud.google.com/run/) to implement my `buttons` service.
 
-In this demo I will show you how to:
+In this demo I will illustrate how to:
 
 * Deploy Cloud Run service that will persist sent data to Cloud PubSub
 * and, how to configure Flic buttons to sent data to Cloud Run service
-
 
 ## Prerequisites
 
