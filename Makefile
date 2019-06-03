@@ -23,14 +23,8 @@ service:
 		--image=gcr.io/knative-samples/buttons:0.1.2 \
 		--update-env-vars="secret=${HOOK_SECRET}"
 
-catalog:
-	gcloud beta data-catalog entries update \
-		--lookup-entry='pubsub.topic.`s9-demo`.clicks' \
-		--schema-from-file=schema.yaml
-
-catalog-check:
-	gcloud beta data-catalog entries lookup \
-		'pubsub.topic.`s9-demo`.clicks'
+serviceless:
+	gcloud beta run services delete buttons
 
 test:
 	go test ./... -v
