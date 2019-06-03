@@ -1,4 +1,4 @@
-# Using Flick buttons with Cloud Run on GCP
+# How to use Flic buttons with Cloud Run on GCP
 
 <img align="right" src="image/flic.png" alt="Flic button">
 
@@ -11,7 +11,7 @@ I went ahead and ordered [4-pack](https://flic.io/shop/flic-4pack) of Flic butto
 In this demo I will illustrate how to:
 
 * Deploy Cloud Run service that will persist sent data to Cloud PubSub
-* and, how to configure Flic buttons to sent data to Cloud Run service
+* and, how to configure Flic buttons to send data to Cloud Run service
 
 ## Prerequisites
 
