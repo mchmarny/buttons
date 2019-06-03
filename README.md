@@ -151,7 +151,9 @@ Assuming all the above deployment steps were completed successfully, you should 
 Hopefully this demo gave you an idea on how to connect your Flic buttons and many other IoT devices to Cloud Run service. With the basic implementation in place we can start working on more creative solutions next.
 
 
+## Disclaimer
 
+This is my personal project and it does not represent my employer. I take no responsibility for issues caused by this code. I do my best to ensure that everything works, but if something goes wrong, my apologies is all you will get.
 
 
 
