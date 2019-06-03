@@ -12,7 +12,7 @@ mod:
 image: mod
 	gcloud builds submit \
 		--project knative-samples \
-		--tag gcr.io/knative-samples/buttons:0.1.2
+		--tag gcr.io/knative-samples/buttons:0.1.3
 
 service:
 	gcloud beta run deploy buttons \
@@ -20,7 +20,7 @@ service:
 		--concurrency=80 \
 		--memory=256Mi \
 		--allow-unauthenticated \
-		--image=gcr.io/knative-samples/buttons:0.1.2 \
+		--image=gcr.io/knative-samples/buttons:0.1.3 \
 		--update-env-vars="secret=${HOOK_SECRET}"
 
 serviceless:
