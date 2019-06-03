@@ -120,15 +120,15 @@ That will get you to the `HTTP Internet Request` action configuration screen
 
 Few parameters to configure here:
 
-| Parameter        | Description                                                                                                                                                                                 |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **URL**          | The full URL of the Cloud Run Service                                                                                                                                                       |
-| **Method**       | Select `POST`                                                                                                                                                                               |
-| **Content Type** | `application/json`                                                                                                                                                                          |
-| **Body**         | JSON payload to send to the service (e.g. `{ "type": "button", "color": "white", "click": 1 }`)                                                                                             |
-| **HTTP Header**  | Kye: `token`, Value: the value of the previously defined `SECRET`. Make sure you click the `Insert` button to "save" the header parameter before clicking `Done` to save the entire action. |
+| Parameter        | Description                                                                                                                               |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **URL**          | The full URL of the Cloud Run Service                                                                                                     |
+| **Method**       | Select `POST`                                                                                                                             |
+| **Content Type** | `application/json`                                                                                                                        |
+| **Body**         | JSON payload to send to the service (e.g. `{ "type": "button", "color": "white", "click": 1 }`)                                           |
+| **HTTP Header**  | Kye: `token`, Value: the value of the previously defined `SECRET`. Make sure you click the `Insert` button to "save" the header parameter |
 
-Now your Flic button is configured for use with Cloud Run
+When done entering the above parameters, click `Done` in upper right corner to save the entire action. Now your Flic button is configured for use with Cloud Run.
 
 ## Demo
 
