@@ -116,7 +116,7 @@ To do that you will need to select one of your buttons on your device, expand th
 
 That will get you to the `HTTP Internet Request` action configuration screen
 
-<img src="image/flic-conf.png" alt="Flic Internet Request Action Configuration" width="300">
+<img src="image/flic-conf.png" alt="Flic Internet Request Action Configuration" width="400">
 
 Few parameters to configure here:
 
