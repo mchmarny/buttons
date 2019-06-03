@@ -34,9 +34,18 @@ func newQueue(ctx context.Context, projectID, topicName string) (q *queue, err e
 		return nil, e
 	}
 
+	t := c.Topic(topicName)
+	_, err = t.Exists(ctx)
+	if err != nil {
+		t, err = c.CreateTopic(ctx, topicName)
+		if err != nil {
+			logger.Fatalf("Unable to create topic: %s - %v", topicName, err)
+		}
+	}
+
 	o := &queue{
 		client: c,
-		topic:  c.Topic(topicName),
+		topic:  t,
 	}
 
 	return o, nil
