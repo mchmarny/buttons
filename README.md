@@ -21,7 +21,11 @@ In this demo I will illustrate how to:
   * `gcloud services enable pubsub.googleapis.com`
   * `gcloud services enable run.googleapis.com`
 
-## Deployment
+## Quick Deploy
+
+[![Click to run buttons on Cloud Run](https://storage.googleapis.com/cloudrun/button.svg)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/ahmetb-public/button&cloudshell_git_repo=https://github.com/mchmarny/buttons.git)
+
+## Deploy The Harder Way
 
 ### Cloud PubSub Topic
 

@@ -1,0 +1,8 @@
+{
+    "name": "buttons",
+    "env": {
+        "SECRET": {
+            "description": "token to use as your button secret"
+        }
+    }
+}
