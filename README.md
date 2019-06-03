@@ -15,8 +15,9 @@ In this demo I will illustrate how to:
 
 ## Prerequisites
 
-* Configured gcloud CLI ([how-to](https://cloud.google.com/sdk/gcloud/))
-* Enabled GCP APIs
+* Configured gcloud CLI (Cloud SDK) for your operating system ([how-to](https://cloud.google.com/sdk/gcloud/)) with default application credentials:
+  * `gcloud auth application-default login`
+* Enabled GCP APIs for Cloud PubSub and Cloud Run
   * `gcloud services enable pubsub.googleapis.com`
   * `gcloud services enable run.googleapis.com`
 
@@ -93,6 +94,12 @@ curl -H "content-type: application/json" -H "token: ${SECRET}" \
     -X POST https://buttons-*******-uc.a.run.app
 ```
 
+You can always find the URL of your `buttons` service by executing the following command
+
+```shell
+gcloud beta run services describe buttons --project YOUR_PROJECT_ID --region us-central1 --format 'value(status.domain)'
+```
+
 ## Configuring Flic Button
 
 To setup Flic buttons on your device () follow the [start instructions](https://start.flic.io/). The Flic buttons also come with all kinds of [preprogrammed actions](https://flic.io/all-functions).
@@ -109,11 +116,13 @@ That will get you to the `HTTP Internet Request` action configuration screen
 
 Few fields to configure here:
 
-* **URL** - The full URL of the Cloud Run Service
-* **Method** - `POST`
-* **Content Type** - `application/json`
-* **Body** - JSON payload to send to the service (e.g. `{ "type": "button", "color": "white", "click": 1 }`)
-* **HTTP Header** - Kye: `token`, Value: the value of the previously defined `SECRET`. Make sure you click the `Insert` button to "save" the header parameter before clicking `Done` to save the entire action.
+| Parameter        | Description                                                                                                                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **URL**          | The full URL of the Cloud Run Service                                                                                                                                                       |
+| **Method**       | Select `POST`                                                                                                                                                                               |
+| **Content Type** | `application/json`                                                                                                                                                                          |
+| **Body**         | JSON payload to send to the service (e.g. `{ "type": "button", "color": "white", "click": 1 }`)                                                                                             |
+| **HTTP Header**  | Kye: `token`, Value: the value of the previously defined `SECRET`. Make sure you click the `Insert` button to "save" the header parameter before clicking `Done` to save the entire action. |
 
 Now your Flic button is configured for use with Cloud Run
 
