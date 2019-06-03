@@ -15,7 +15,7 @@ In this demo I will illustrate how to:
 
 ## Quick Deploy
 
-You can deploy `buttons` as a service in Cloud Run with a single click... yes, I realize the irony. Just follow the prompts in Cloud Shell and when done, go to the [Configuring Flic Button](#ConfiguringFlicButton) section to finish.
+You can deploy `buttons` as a service in Cloud Run with a single click... yes, I realize the irony. Just follow the prompts in Cloud Shell and when done, go to the [Configuring Flic Button](#configuring-flic-button) section to finish.
 
 [![Click to run buttons on Cloud Run](https://storage.googleapis.com/cloudrun/button.svg)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/ahmetb-public/button&cloudshell_git_repo=https://github.com/mchmarny/buttons.git)
 
