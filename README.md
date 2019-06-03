@@ -106,19 +106,19 @@ gcloud beta run services describe buttons --project YOUR_PROJECT_ID --region us-
 
 ## Configuring Flic Button
 
-To setup Flic buttons on your device follow the [quick start instructions](https://start.flic.io/). Each one of the Flic buttons come with many [pre-programmed actions](https://flic.io/all-functions).
+To setup Flic buttons on your device follow the [quick start instructions](https://start.flic.io/). Each one of the Flic buttons come with many [pre-programmed actions](https://flic.io/all-functions). To execute above configured Cloud Run service though we will use the `Internet Request` action.
 
 <img src="image/flic-req.png" alt="Flic Internet Request Action">
 
-To execute above configured Cloud Run service though we will use the `Internet Request` action. To do that you will need to select one of your buttons on your device, expand the `Advanced` category, and configure an action for either `single`, `double`, or `hold` click.
+To do that you will need to select one of your buttons on your device, expand the `Advanced` category, and configure an action for either `single`, `double`, or `hold` click.
 
 <img src="image/flic-nav.png" alt="Flic Internet Request Action">
 
 That will get you to the `HTTP Internet Request` action configuration screen
 
-<img src="image/flic-conf.png" alt="Flic Internet Request Action Configuration">
+<img src="image/flic-conf.png" alt="Flic Internet Request Action Configuration" width="200">
 
-Few fields to configure here:
+Few parameters to configure here:
 
 | Parameter        | Description                                                                                                                                                                                 |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
