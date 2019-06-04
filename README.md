@@ -13,22 +13,22 @@ In this demo I will illustrate how to:
 * Deploy Cloud Run service that will persist sent data to Cloud PubSub
 * and, how to configure Flic buttons to send data to Cloud Run service
 
-## Prerequisites
+## Easy Deploy
+
+You can deploy `buttons` service in Cloud Run with a single... wait for it... click of a button. Just click on the "Run on Google Cloud" bellow and follow the prompts in Cloud Shell. When done, go to the [Configuring Flic Button](#configuring-flic-button) section to finish configuring your Flic buttons.
+
+[![Click to run on Cloud Run](https://storage.googleapis.com/cloudrun/button.svg)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/ahmetb-public/button&cloudshell_git_repo=https://github.com/mchmarny/buttons.git)
+
+
+## Manual Deploy (the harder way)
+
+### Prerequisites
 
 * Configured gcloud CLI (Cloud SDK) for your operating system ([how-to](https://cloud.google.com/sdk/gcloud/)) with default application credentials:
   * `gcloud auth application-default login`
 * Enabled GCP APIs for Cloud PubSub and Cloud Run
   * `gcloud services enable pubsub.googleapis.com`
   * `gcloud services enable run.googleapis.com`
-
-## Quick Deploy
-
-You can deploy `buttons` service in Cloud Run with a single... wait for it... click of a button (yes, there is too many "buttons"). Just click on the bellow "Run on Google Cloud" and follow the prompts in Cloud Shell. When done, go to the [Configuring Flic Button](#configuring-flic-button) section to finish configuring your Flic buttons.
-
-[![Click to run on Cloud Run](https://storage.googleapis.com/cloudrun/button.svg)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/ahmetb-public/button&cloudshell_git_repo=https://github.com/mchmarny/buttons.git)
-
-
-## Deploy The Harder Way
 
 ### Cloud PubSub Topic
 
