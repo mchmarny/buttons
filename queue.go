@@ -36,8 +36,12 @@ func newQueue(ctx context.Context, projectID, topicName string) (q *queue, err e
 	}
 
 	t := c.Topic(topicName)
-	_, err = t.Exists(ctx)
+	topicExists, err := t.Exists(ctx)
 	if err != nil {
+		return nil, err
+	}
+
+	if !topicExists {
 		logger.Printf("Topic %s not found, creating...", topicName)
 		t, err = c.CreateTopic(ctx, topicName)
 		if err != nil {

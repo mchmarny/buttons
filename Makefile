@@ -11,7 +11,7 @@ mod:
 
 image: mod
 	gcloud builds submit \
-		--tag gcr.io/cloudylab/buttons:0.1.4
+		--tag gcr.io/cloudylab/buttons:0.1.5
 
 service:
 	gcloud beta run deploy buttons \
@@ -19,7 +19,7 @@ service:
 		--concurrency=80 \
 		--memory=256Mi \
 		--allow-unauthenticated \
-		--image=gcr.io/cloudylab/buttons:0.1.4 \
+		--image=gcr.io/cloudylab/buttons:0.1.5 \
 		--update-env-vars="secret=${HOOK_SECRET}"
 
 serviceless:
