@@ -25,12 +25,13 @@ In this demo I will illustrate how to:
 
 You can deploy `buttons` as a service in Cloud Run with a single click... yes, I do realize the irony (too many buttons).
 
-Before you click the "easy" button to deploy to Cloud Run, you will have to create the PubSub topic manually to store the data sent from each button action. Fortunately, that's only one command:
+Before you can click the "Run on Google Cloud" button however, you will have to create a PubSub topic manually. The button application needs it to store the data that will be sent from each Flic button click. Fortunately, that's only one command:
 
 ```shell
 gcloud pubsub topics create clicks
 ```
-Not that the topic has been created, you can click on the bellow button and follow the prompts in Cloud Shell. When done, go to the [Configuring Flic Button](#configuring-flic-button) section configure your Flic buttons.
+
+Not that you have a topic, you can just click on the bellow button and follow the prompts in Cloud Shell. When done, go to the [Configuring Flic Button](#configuring-flic-button) section to finish configuring your Flic buttons.
 
 [![Click to run on Cloud Run](https://storage.googleapis.com/cloudrun/button.svg)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/ahmetb-public/button&cloudshell_git_repo=https://github.com/mchmarny/buttons.git)
 
